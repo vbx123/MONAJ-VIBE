@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>MONAJ VIBE | موناج ڤايب - الطلبات الإلكترونية</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -151,6 +151,7 @@
       border: none;
       cursor: pointer;
       font-weight: 600;
+      transition: all 0.2s ease;
     }
 
     .btn-preview-link {
@@ -158,13 +159,21 @@
       border: 1px solid var(--primary);
       color: var(--primary);
     }
+    
+    .btn-preview-link:hover {
+      background: rgba(108, 92, 231, 0.1);
+    }
 
     .btn-order-trigger {
       background: var(--primary);
       color: #fff;
     }
+    
+    .btn-order-trigger:hover {
+      background: var(--primary-hover);
+    }
 
-    /* Form Fields Styling */
+    /* Form Fields Styling (not used now but keep minimal) */
     .form-group {
       margin-bottom: 20px;
     }
@@ -240,7 +249,7 @@
       color: var(--text);
     }
 
-    /* Success Page Styles */
+    /* Success Page Styles - kept as reference but will not be used, still safe */
     .success-container {
       text-align: center;
       padding: 30px 10px;
@@ -277,6 +286,12 @@
       text-align: right;
       line-height: 1.6;
     }
+    
+    /* small utility */
+    .text-muted {
+      color: var(--text-muted);
+      font-size: 13px;
+    }
   </style>
 </head>
 <body>
@@ -301,62 +316,25 @@
         </div>
     </div>
 
-    <div id="orderFormPage" class="page">
-      <button class="btn-back-nav" onclick="navigateTo('categoryPage')">➔ العودة للقوالب</button>
-      <h2>تخصيص بيانات قالبك</h2>
-      <p id="selectedTemplateInfo" style="font-size:12px; color:var(--text-muted); margin-bottom:15px;"></p>
-      
-      <form id="mainOrderForm" onsubmit="submitOrder(event)">
-        <div class="form-group">
-          <label>اسم العميل الثنائي:</label>
-          <input type="text" id="clientName" required placeholder="أدخل اسمك الكريم">
-        </div>
-        
-        <div class="form-group">
-          <label>رقم الواتساب الفعال (مع رمز الدولة):</label>
-          <input type="tel" id="clientPhone" required placeholder="مثال: 201012345678+">
-        </div>
-
-        <div class="dynamic-field-box">
-          <h3 style="font-size:14px; margin-bottom:10px; color:var(--primary);">البيانات المراد كتابتها بالتصميم:</h3>
-          <div id="dynamicInputsContainer">
-            </div>
-        </div>
-
-        <button type="submit" id="btnSubmit" class="btn-main">تأكيد الطلب وإرسال البيانات</button>
-      </form>
-    </div>
-
+    <!-- تم إزالة صفحة orderFormPage نهائيًا، وتم استبدال الوظيفة بالواتساب المباشر -->
+    <!-- إبقاء صفحة نجاح افتراضية ولكن لن تُستخدم، مع الاحتفاظ بها لتجنب أي أخطاء ولكن لن تظهر أبدًا-->
     <div id="successPage" class="page">
       <div class="success-container">
         <div class="success-icon">✓</div>
         <h2>تم استلام طلبك بنجاح!</h2>
-        <p style="margin-top: 10px; color: var(--text-muted);">تم حفظ بياناتك وجاري معالجتها وتجهيز المسودة الخاصة بك.</p>
-        
-        <div class="displayOrderId-wrapper">
-          <div id="displayOrderId" title="اضغط لنسخ الكود">MV-00000</div>
-          <p style="font-size: 11px; color: var(--text-muted);">انقر على الكود أعلاه لنسخه تلقائياً.</p>
-        </div>
-
-        <div class="warning-box">
-          <strong>تنبيه هام جداً وصارم:</strong><br>
-          رقم ومُعرّف طلبك يظهر لك لمرة واحدة فقط ولن تتمكن من رؤيته مجدداً وهو هويتك الوحيدة لمتابعة طلبك وتسليم الصور معنا عبر الواتساب. وفي حال حدوث أي تأخير أرسل لنا هذا الرقم فوراً.
-        </div>
-
+        <p style="margin-top: 10px; color: var(--text-muted);">سيتم التواصل معك عبر الواتساب.</p>
         <button class="btn-main" style="margin-top: 25px;" onclick="window.location.reload()">تصفح من جديد</button>
       </div>
     </div>
-
   </div>
 
   <script>
-    // الرابط الفعلي الخاص بك المربوط بالجوجل شيت مباشرة
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwYRxr6hTDuteUtyf7JJor17QdP5Uo_iFhFXq-Bnqu6TDHdd1Ctn3cLeWlwZ2y5dBUYuQ/exec";
-
+    // رقم الواتساب المستهدف: +20 15 03296750 (بدون علامة + في الرابط ولكن يمكن إضافة 20)
+    const TARGET_WHATSAPP_NUMBER = "201503296750";  // بدون +, فقط الأرقام
+    
+    // المتغيرات المساعدة
     let currentActiveCategory = "";
-    let selectedTemplateData = null;
 
-    // عند فتح الصفحة نقوم بجلب الأقسام الرئيسية أولاً
     document.addEventListener("DOMContentLoaded", () => {
       fetchCategories();
     });
@@ -385,17 +363,22 @@
             container.appendChild(div);
           });
         })
-        .catch(err => console.error("خطأ في جلب ملف الأقسام الرئيسي:", err));
+        .catch(err => {
+          console.error("خطأ في جلب ملف الأقسام الرئيسي:", err);
+          // عرض بيانات تجريبية في حال عدم وجود الملف (للتجربة)
+          const container = document.getElementById("categoriesContainer");
+          container.innerHTML = `<div class="text-muted" style="grid-column:span 2; text-align:center;">⚠️ لم يتم العثور على ملف الأقسام، تأكد من وجود categories.json</div>`;
+        });
     }
 
-    // 2. جلب القوالب الخاصة بقسم معين من ملف الـ JSON المخصص له
+    // 2. جلب القوالب الخاصة بقسم معين
     function loadCategoryTemplates(catId, jsonFileName) {
       currentActiveCategory = catId;
       fetch(jsonFileName)
         .then(res => res.json())
         .then(data => {
           navigateTo("categoryPage");
-          document.getElementById("categoryPageTitle").innerText = data.category_title;
+          document.getElementById("categoryPageTitle").innerHTML = `${data.category_icon || '📁'} ${data.category_title}`;
           
           const container = document.getElementById("templatesContainer");
           container.innerHTML = "";
@@ -403,130 +386,100 @@
           data.templates.forEach(tmpl => {
             const card = document.createElement("div");
             card.className = "card-template";
+            
+            // إنشاء بنية البطاقة مع زر الطلب الذي يفتح الواتساب مباشرة
             card.innerHTML = `
-              <div class="template-thumb">${data.category_icon}</div>
+              <div class="template-thumb" style="font-size:28px; margin-bottom:5px;">${data.category_icon || '✨'}</div>
               <div class="template-body">
                 <div>
-                  <div class="template-title">${tmpl.name}</div>
+                  <div class="template-title" style="font-weight:600; font-size:15px;">${tmpl.name}</div>
                   <div class="template-price">السعر: ${tmpl.price}</div>
                 </div>
                 <div class="template-actions">
-                  <button class="btn-action btn-preview-link" onclick="openPreviewPage('${tmpl.preview_url}')">المعاينة</button>
-                  <button class="btn-action btn-order-trigger" onclick='openOrderFormPage(${JSON.stringify(tmpl)})'>طلب القالب</button>
+                  <button class="btn-action btn-preview-link" data-preview-url="${tmpl.preview_url || '#'}">المعاينة</button>
+                  <button class="btn-action btn-order-trigger" data-template-name="${tmpl.name.replace(/"/g, '&quot;')}" data-preview-url="${tmpl.preview_url || '#'}" data-price="${tmpl.price}">طلب القالب</button>
                 </div>
               </div>
             `;
+            
+            // إضافة الأحداث
+            const previewBtn = card.querySelector('.btn-preview-link');
+            const orderBtn = card.querySelector('.btn-order-trigger');
+            
+            previewBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const url = previewBtn.getAttribute('data-preview-url');
+              openPreview(url);
+            });
+            
+            orderBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const templateName = orderBtn.getAttribute('data-template-name');
+              const previewUrlRaw = orderBtn.getAttribute('data-preview-url');
+              const price = orderBtn.getAttribute('data-price');
+              redirectToWhatsApp(templateName, previewUrlRaw, price);
+            });
+            
             container.appendChild(card);
           });
         })
-        .catch(err => console.error("خطأ في جلب تفاصيل قوالب القسم:", err));
-    }
-
-    function openPreviewPage(url) {
-      if(url && url !== "#") {
-        window.open(url, '_blank');
-      } else {
-        alert("رابط المعاينة غير متاح حالياً لهذا القالب.");
-      }
-    }
-
-    // 3. بناء فورم التخصيص الحي للمستخدم بناءً على مصفوفة الحقول المطلوبة بالقالب
-    function openOrderFormPage(templateObj) {
-      selectedTemplateData = templateObj;
-      navigateTo("orderFormPage");
-      
-      document.getElementById("selectedTemplateInfo").innerText = `القالب المختار: ${templateObj.name} | السعر المتوقع: ${templateObj.price}`;
-      
-      const inputsContainer = document.getElementById("dynamicInputsContainer");
-      inputsContainer.innerHTML = "";
-      
-      if(templateObj.fields && templateObj.fields.length > 0) {
-        templateObj.fields.forEach(field => {
-          const group = document.createElement("div");
-          group.className = "form-group";
-          group.innerHTML = `
-            <label>${field.label}:</label>
-            <input type="text" class="custom-dynamic-input" data-label="${field.label}" required placeholder="مثال: ${field.placeholder}">
-          `;
-          inputsContainer.appendChild(group);
+        .catch(err => {
+          console.error("خطأ في جلب تفاصيل قوالب القسم:", err);
+          const container = document.getElementById("templatesContainer");
+          container.innerHTML = `<div class="text-muted" style="grid-column:span 2; text-align:center;">⚠️ فشل تحميل القوالب: ${jsonFileName}</div>`;
         });
-      } else {
-        inputsContainer.innerHTML = "<p style='font-size:12px; color:var(--text-muted);'>لا يتطلب هذا القالب تعبئة حقول إضافية معقدة.</p>";
-      }
     }
 
-    // توليد كود الـ ID العشوائي الذكي الحصري للعميل
-    function generateOrderId() {
-      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-      let result = "MV-";
-      for (let i = 0; i < 5; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    // فتح معاينة القالب (يحاول فتح a6.html أو الرابط الموجود)
+    function openPreview(url) {
+      if (!url || url === "#") {
+        alert("رابط المعاينة غير متاح حالياً لهذا القالب.");
+        return;
       }
-      return result;
+      // إذا كان الرابط a6.html أو أي رابط نسبي، سيفتح بشكل صحيح
+      window.open(url, '_blank');
     }
 
-    // 4. دالة الإرسال البرمجية إلى الجوجل شيت مباشرة وتوليد شاشة النجاح
-    function submitOrder(event) {
-      event.preventDefault();
-      
-      const btnSubmit = document.getElementById("btnSubmit");
-      btnSubmit.disabled = true;
-      btnSubmit.innerText = "جاري إرسال وتأمين طلبك...";
-
-      const orderId = generateOrderId();
-      const clientName = document.getElementById("clientName").value.trim();
-      const clientPhone = document.getElementById("clientPhone").value.trim();
-      
-      // تجميع كافة الحقول الديناميكية الخاصة بنوع القالب في نص منسق واحد ومفهوم
-      let dynamicDetailsArr = [];
-      document.querySelectorAll(".custom-dynamic-input").forEach(input => {
-        const label = input.getAttribute("data-label");
-        const val = input.value.trim();
-        dynamicDetailsArr.push(`${label}: ${val}`);
-      });
-      const dynamicDetailsStr = dynamicDetailsArr.join(" | ");
-
-      // إعداد البيانات وإرسالها عبر تقنية URLSearchParams لكي يستقبلها الـ Apps Script بدقة
-      const formData = new URLSearchParams();
-      formData.append("order_id", orderId);
-      formData.append("client_name", clientName);
-      formData.append("client_phone", clientPhone);
-      formData.append("category_name", currentActiveCategory);
-      formData.append("template_name", selectedTemplateData ? selectedTemplateData.name : "غير محدد");
-      formData.append("dynamic_details", dynamicDetailsStr);
-
-      // عملية الإرسال بالخلفية
-      fetch(WEB_APP_URL, {
-        method: "POST",
-        body: formData,
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
+    // وظيفة تحويل الطلب إلى واتساب مباشر بدون أي فورم أو تخزين في جوجل شيت
+    function redirectToWhatsApp(templateName, previewUrl, price) {
+      // تكوين النص المطلوب: باسم المنتج ورابط المعاينة
+      // نص جاهز: "أريد طلب قالب: [اسم المنتج] - رابط المعاينة: [رابط المعاينة]"
+      let message = `مرحباً، أرغب في طلب قالب "${templateName}"`;
+      if (previewUrl && previewUrl !== "#") {
+        // نستخدم الرابط الكامل: بما أن الموقع قد يكون على domain أو local, سنستخدم الرابط الحالي كأساس للوصول لـ a6.html
+        let fullPreviewLink = previewUrl;
+        // إذا كان الرابط هو "a6.html" مجرد اسم ملف أو مسار نسبي، نقوم بتحويله إلى رابط مطلق بناءً على origin الحالي
+        if (!previewUrl.startsWith('http://') && !previewUrl.startsWith('https://')) {
+          // إنشاء رابط مطلق استنادًا إلى موقع الصفحة الحالي
+          const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/');
+          fullPreviewLink = new URL(previewUrl, window.location.href).href;
         }
-      })
-      .then(res => res.text())
-      .then(responseText => {
-        // فك الحظر عن الزر وإظهار صفحة النجاح
-        btnSubmit.disabled = false;
-        btnSubmit.innerText = "تأكيد الطلب وإرسال البيانات";
-        
-        navigateTo("successPage");
-        
-        const idBox = document.getElementById("displayOrderId");
-        idBox.innerText = orderId;
-        
-        // ميزة نسخ الكود الفوري بمجرد النقر عليه للعميل
-        idBox.onclick = () => {
-          navigator.clipboard.writeText(orderId);
-          alert("تم نسخ كود طلبك بنجاح لمتابعته معنا: " + orderId);
-        };
-      })
-      .catch(err => {
-        console.error("خطأ في عملية الإرسال السحابي:", err);
-        alert("حدثت مشكلة شبكة أثناء إرسال البيانات، يرجى المحاولة مرة أخرى.");
-        btnSubmit.disabled = false;
-        btnSubmit.innerText = "تأكيد الطلب وإرسال البيانات";
-      });
+        message += ` - رابط المعاينة: ${fullPreviewLink}`;
+      } else {
+        message += ` (لا يتوفر رابط معاينة مباشر)`;
+      }
+      
+      if (price && price !== "غير محدد") {
+        message += ` - السعر: ${price}`;
+      }
+      
+      message += ` - القسم: ${currentActiveCategory || "عام"}`;
+      
+      // ترميز النص للـ URL
+      const encodedMessage = encodeURIComponent(message);
+      
+      // رابط واتساب مباشر للرقم المطلوب
+      const whatsappUrl = `https://wa.me/${TARGET_WHATSAPP_NUMBER}?text=${encodedMessage}`;
+      
+      // فتح الواتساب في نافذة جديدة
+      window.open(whatsappUrl, '_blank');
     }
+    
+    // تنبيه في حالة عدم تحميل ملفات JSON مع الحفاظ على تجربة جيدة
+    window.addEventListener('error', (e) => {
+      if(e.target.tagName === 'SCRIPT' && e.target.src) return;
+      console.warn("تأكد من وجود ملفات الأقسام categories.json وملفات الأقسام الفرعية");
+    });
   </script>
 </body>
-    </html>
+  </html>
