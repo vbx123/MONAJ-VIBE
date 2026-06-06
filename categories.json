@@ -1,0 +1,25 @@
+{
+    "categories": [
+        {
+            "id": "birthdays",
+            "name": "أعياد ميلاد",
+            "icon": "🎂",
+            "desc": "قوالب مبهجة وحيوية تناسب كل الأعمار السنية",
+            "file_data": "birthdays_data.json"
+        },
+        {
+            "id": "weddings",
+            "name": "دعوات أفراح",
+            "icon": "💍",
+            "desc": "تصاميم ملكية وفاخرة تليق بليلة العمر المنتظرة",
+            "file_data": "weddings_data.json"
+        },
+        {
+            "id": "events",
+            "name": "مناسبات عامة",
+            "icon": "🎉",
+            "desc": "حفلات تخرج، عقيقة، افتتاح مشروعات وندوات",
+            "file_data": "events_data.json"
+        }
+    ]
+}

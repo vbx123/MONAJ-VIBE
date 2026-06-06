@@ -1,0 +1,33 @@
+{
+    "category_title": "قوالب المناسبات العامة المختلفة",
+    "category_icon": "🎉",
+    "templates": [
+        {
+            "id": "e_grad_01",
+            "name": "قالب تهنئة التخرج الجامعي الأنيق",
+            "price": "75 جنيه",
+            "preview_file": "templates/events/graduation_v1.html",
+            "photos_count": 2,
+            "fields": [
+                {
+                    "key": "grad_name",
+                    "label": "اسم الخريج / الخريجة",
+                    "type": "text",
+                    "required": true
+                },
+                {
+                    "key": "faculty",
+                    "label": "اسم الجامعة والكلية والتخصص",
+                    "type": "text",
+                    "required": true
+                },
+                {
+                    "key": "grad_year",
+                    "label": "سنة التخرج أو ميعاد حفلة التخرج",
+                    "type": "text",
+                    "required": true
+                }
+            ]
+        }
+    ]
+}

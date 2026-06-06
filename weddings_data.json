@@ -1,0 +1,45 @@
+{
+    "category_title": "قوالب دعوات الأفراح الفاخرة",
+    "category_icon": "💍",
+    "templates": [
+        {
+            "id": "w_royal_01",
+            "name": "قالب الملكي المذهب الفاخر ذو الصفحة الواحدة",
+            "price": "150 جنيه",
+            "preview_file": "templates/weddings/royal_gold_v1.html",
+            "photos_count": 3,
+            "fields": [
+                {
+                    "key": "groom",
+                    "label": "اسم العريس بالكامل",
+                    "type": "text",
+                    "required": true
+                },
+                {
+                    "key": "bride",
+                    "label": "اسم العروسة بالكامل",
+                    "type": "text",
+                    "required": true
+                },
+                {
+                    "key": "wedding_date",
+                    "label": "تاريخ ليلة الزفاف المنتظرة",
+                    "type": "date",
+                    "required": true
+                },
+                {
+                    "key": "hall_name",
+                    "label": "اسم ومكان قاعة الفرح",
+                    "type": "text",
+                    "required": true
+                },
+                {
+                    "key": "families",
+                    "label": "أسماء عائلات أهل العروسين للترحيب",
+                    "type": "textarea",
+                    "required": false
+                }
+            ]
+        }
+    ]
+}

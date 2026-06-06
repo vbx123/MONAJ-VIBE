@@ -1,0 +1,39 @@
+{
+    "category_title": "قوالب أعياد الميلاد المتاحة",
+    "category_icon": "🎂",
+    "templates": [
+        {
+            "id": "b_mickey_01",
+            "name": "قالب ميكي ماوس المبهج للأطفال",
+            "price": "50 جنيه",
+            "preview_file": "templates/birthdays/mickey_v1.html",
+            "photos_count": 1,
+            "fields": [
+                {
+                    "key": "child_name",
+                    "label": "اسم الطفل المحتفى به",
+                    "type": "text",
+                    "required": true
+                },
+                {
+                    "key": "child_age",
+                    "label": "العمر القادم للطفل",
+                    "type": "text",
+                    "required": true
+                },
+                {
+                    "key": "party_date",
+                    "label": "تاريخ وتوقيت الحفل بالملي",
+                    "type": "text",
+                    "required": true
+                },
+                {
+                    "key": "party_address",
+                    "label": "عنوان قاعة الحفل بالتفصيل",
+                    "type": "textarea",
+                    "required": false
+                }
+            ]
+        }
+    ]
+}
