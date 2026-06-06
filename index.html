@@ -3,661 +3,505 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MONAJ VIBE | منصة الدعوات الرقمية</title>
+    <title>عيد ميلاد سعيد! 🎉</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+        
         :root {
-            --primary-color: #25d366; /* لون الواتساب المحقق */
-            --accent-color: #101010;  /* أسود داكن كلاسيكي وفخم */
-            --bg-color: #fafafa;
-            --card-bg: #ffffff;
-            --text-color: #1d1d1f;
-            --text-muted: #6e6e73;
-            --border-color: #e5e5e7;
+            --primary-color: #ff477e;
+            --secondary-color: #ff85a2;
+            --dark-bg: #0b0813;
+            --card-bg: rgba(255, 255, 255, 0.06);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-light: #fff;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Cairo', sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.5;
-            padding-bottom: 60px;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* البار العلوي الأنيق الصغير (إمضاء شخصي) */
-        .navbar {
-            display: block;
-            text-align: center;
-            padding: 20px;
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .navbar .brand {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            font-size: 20pt;
-            font-weight: bold;
-            font-style: italic;
-            letter-spacing: 1px;
-            color: var(--accent-color);
-            text-decoration: none;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        /* العناوين */
-        .section-title {
-            font-size: 18pt;
-            font-weight: 600;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        /* شبكة الأقسام الرئيسية */
-        .grid-categories {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-        }
-
-        .card-category {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 40px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .card-category:hover {
-            transform: translateY(-4px);
-            border-color: #000;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-        }
-
-        .card-category .icon {
-            font-size: 36pt;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .card-category h3 {
-            font-size: 14pt;
-            margin-bottom: 8px;
-        }
-
-        .card-category p {
-            font-size: 10.5pt;
-            color: var(--text-muted);
-        }
-
-        /* عرض القوالب */
-        .view-section {
-            display: none;
-        }
-
-        .view-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .btn-back {
-            background: none;
-            border: 1px solid var(--border-color);
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 10pt;
-            font-weight: 500;
-            transition: background 0.2s;
-        }
-
-        .btn-back:hover {
-            background: #f5f5f7;
-        }
-
-        .grid-templates {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .card-template {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            overflow: hidden;
+        /* 1. صفحة البداية والمفاجأة */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
+            z-index: 999;
             display: flex;
             flex-direction: column;
-        }
-
-        .template-thumb {
-            height: 160px;
-            background: #f5f5f7;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            font-size: 40pt;
-            border-bottom: 1px solid var(--border-color);
+            align-items: center;
+            transition: opacity 1s ease-out, visibility 1s;
         }
 
-        .template-body {
-            padding: 20px;
-            flex-grow: 1;
+        .pulse-element {
+            font-size: 5rem;
+            animation: pulse 1.5s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        .intro-btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 71, 126, 0.6);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .intro-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 35px rgba(255, 71, 126, 0.9);
+        }
+
+        /* 2. المحتوى الرئيسي */
+        #main-content {
+            opacity: 0;
+            visibility: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #1f1a24 0%, #0b0813 100%);
+            transition: opacity 1.5s ease-in;
+            padding: 40px 20px;
+            width: 100%;
+            min-height: 100vh;
         }
 
-        .template-title {
-            font-size: 13pt;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .template-price {
-            font-size: 11pt;
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 15px;
-        }
-
-        .template-actions {
+        /* زر صوت صغير وأنيق في الأعلى */
+        .audio-control {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(5px);
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            color: white;
             display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            z-index: 100;
+            transition: all 0.3s;
+        }
+
+        .audio-control:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        /* الجزء العلوي (الهيدر) */
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+            margin-top: 20px;
+        }
+
+        .profile-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 20px;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            box-shadow: 0 0 25px var(--primary-color);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .birthday-title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffe600, #ff477e, #ff85a2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        /* حاويات الأقسام التفاعلية */
+        .section-container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
             gap: 10px;
         }
 
-        .btn-action {
-            flex: 1;
-            padding: 10px;
-            border-radius: 6px;
-            border: none;
-            font-weight: 600;
-            font-size: 10.5pt;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-        }
-
-        .btn-preview-link {
-            background: #f5f5f7;
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-order-trigger {
-            background: var(--accent-color);
-            color: #fff;
-        }
-
-        /* صفحة المعاينة المباشرة */
-        .preview-container {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .preview-iframe-mock {
+        /* ألبوم الصور (Slider) */
+        .slider-wrapper {
+            position: relative;
             width: 100%;
-            height: 450px;
-            background: #f5f5f7;
-            border: 2px dashed #ccc;
-            border-radius: 8px;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 5;
+        }
+
+        .slider-btn.prev { right: 10px; }
+        .slider-btn.next { left: 10px; }
+
+        /* صندوق التعليقات */
+        .comment-form {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            gap: 12px;
             margin-bottom: 20px;
         }
 
-        /* صفحة الفورم المستقلة بالكامل */
-        .form-container {
-            background: var(--card-bg);
+        .comment-form input, .comment-form textarea {
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 30px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 11pt;
-        }
-
-        .form-group input[type="text"],
-        .form-group input[type="tel"],
-        .form-group input[type="date"],
-        .form-group textarea {
-            width: 100%;
             padding: 12px;
-            border: 1px solid var(--border-color);
             border-radius: 8px;
-            font-size: 11pt;
+            color: white;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+
+        .comment-form input:focus, .comment-form textarea:focus {
+            border-color: var(--primary-color);
             outline: none;
-            background: #fafafa;
         }
 
-        .form-group input:focus, .form-group textarea:focus {
-            background: #fff;
-            border-color: #000;
-        }
-
-        .info-box-images {
-            background: #fff9db;
-            border: 1px solid #ffe066;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 10pt;
-            color: #665200;
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
-
-        .btn-submit-order {
+        .comment-form button {
             background: var(--primary-color);
             color: white;
             border: none;
-            width: 100%;
-            padding: 14px;
+            padding: 10px;
             border-radius: 8px;
-            font-size: 12pt;
             font-weight: bold;
             cursor: pointer;
-            transition: opacity 0.2s;
+            transition: background 0.3s;
         }
 
-        .btn-submit-order:hover {
-            opacity: 0.9;
+        .comment-form button:hover {
+            background: #e0366f;
         }
 
-        /* شاشة عرض نجاح الطلب */
-        .success-container {
-            text-align: center;
-            padding: 40px 20px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            max-width: 550px;
-            margin: 0 auto;
-            display: none;
+        .comments-list {
+            max-height: 250px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-left: 5px;
         }
 
-        .success-icon {
-            font-size: 50pt;
-            color: var(--primary-color);
-            margin-bottom: 15px;
+        .comment-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-right: 3px solid var(--primary-color);
+            padding: 12px;
+            border-radius: 4px 8px 8px 4px;
+            animation: fadeIn 0.5s ease-in-out;
         }
 
-        .order-id-badge {
-            display: inline-block;
-            background: #f1f2f6;
-            border: 2px dashed var(--text-color);
-            padding: 10px 25px;
-            font-size: 18pt;
+        .comment-author {
             font-weight: bold;
-            letter-spacing: 2px;
-            margin: 15px 0;
-            border-radius: 6px;
-            cursor: pointer;
+            font-size: 0.95rem;
+            color: var(--secondary-color);
+            margin-bottom: 4px;
         }
 
-        .warning-box {
-            background: #fff5f5;
-            border: 1px solid #ffe3e3;
-            color: #c92a2a;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 10.5pt;
-            text-align: right;
-            margin-top: 20px;
-            line-height: 1.5;
+        .comment-text {
+            font-size: 0.9rem;
+            color: #ddd;
         }
+
+        /* الحركات الزخرفية */
+        .confetti {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            top: -10px;
+            z-index: 99;
+            animation: fall linear forwards;
+        }
+
+        @keyframes pulse { 0% { transform: scale(0.9); } 100% { transform: scale(1.1); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <!-- البار العلوي كشعار إمضاء أنيق -->
-    <nav class="navbar">
-        <a href="#" class="brand" onclick="window.location.reload();">موناج ڤايب__MONAJ VIBE</a>
-    </nav>
+    <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
 
-    <div class="container">
-        
-        <!-- ================= 1. الصفحة الرئيسية (الأقسام) ================= -->
-        <div id="homePage" class="view-section" style="display: block;">
-            <h2 class="section-title">اختر قسم المناسبة لتصفح القوالب</h2>
-            <div class="grid-categories" id="categoriesContainer">
-                <!-- يتم التحميل من ملف categories.json ديناميكياً -->
-            </div>
-        </div>
-
-        <!-- ================= 2. صفحة عرض القوالب داخل القسم ================= -->
-        <div id="categoryPage" class="view-section">
-            <div class="view-header">
-                <h2 id="categoryPageTitle">اسم القسم الحلي</h2>
-                <button class="btn-back" onclick="navigateBackToHome()">🡪 العودة للأقسام</button>
-            </div>
-            <div class="grid-templates" id="templatesContainer">
-                <!-- يتم التحميل ديناميكياً من ملف القسم المخصص -->
-            </div>
-        </div>
-
-        <!-- ================= 3. صفحة المعاينة الحية الفردية ================= -->
-        <div id="previewPage" class="view-section">
-            <div class="view-header">
-                <h2 id="previewPageTitle">معاينة القالب</h2>
-                <button class="btn-back" onclick="navigateBackToCategory()">🡪 العودة للقوالب</button>
-            </div>
-            <div class="preview-container">
-                <div class="preview-iframe-mock" id="previewMockBox">
-                    <!-- محاكاة لفتح ملف القالب من المستودع -->
-                </div>
-                <button class="btn-action btn-order-trigger" id="previewOrderButton" style="max-width: 250px; margin: 0 auto; display: block;">اطلب هذا القالب الآن 💰</button>
-            </div>
-        </div>
-
-        <!-- ================= 4. صفحة الفورم المستقلة بالكامل ================= -->
-        <div id="formPage" class="view-section">
-            <div class="view-header">
-                <h2 id="formPageTitle">تعبئة بيانات الطلب المخصصة</h2>
-                <button class="btn-back" onclick="navigateBackToCategory()">🡪 إلغاء والعودة</button>
-            </div>
-            <div class="form-container">
-                <form id="dynamicOrderForm" onsubmit="submitOrderToGoogleSheets(event)">
-                    
-                    <!-- حقول مخفية للـ Admin لمعرفة نوع القالب -->
-                    <input type="hidden" id="hiddenTemplateId" name="template_id">
-                    <input type="hidden" id="hiddenTemplateName" name="template_name">
-                    <input type="hidden" id="hiddenCategoryName" name="category_name">
-
-                    <!-- الحقول الأساسية الثابتة لكل العملاء -->
-                    <div class="form-group">
-                        <label>اسمك الكامل (صاحب الطلب) *</label>
-                        <input type="text" id="clientName" name="client_name" required placeholder="أدخل اسمك الثلاثي">
-                    </div>
-
-                    <div class="form-group">
-                        <label>رقم هاتف متاح عليه واتساب *</label>
-                        <input type="tel" id="clientPhone" name="client_phone" required placeholder="مثال: 01012345678">
-                    </div>
-
-                    <!-- الملاحظة النصية البديلة عن رفع الصور للواتساب -->
-                    <div class="info-box-images" id="photosNoticeBox">
-                        <!-- تظهر هنا الملاحظة النصية لعدد الصور المطلوبة لهذا القالب -->
-                    </div>
-
-                    <!-- حاوية الأسئلة المتغيرة والديناميكية بناءً على ملف الـ JSON المخصص للقالب -->
-                    <div id="dynamicInputsContainer"></div>
-
-                    <button type="submit" class="btn-submit-order">تأكيد الطلب وإرسال البيانات 🚀</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- ================= 5. شاشة نجاح الطلب ورقم الـ ID الحصري ================= -->
-        <div id="successPage" class="success-container">
-            <div class="success-icon">✓</div>
-            <h2>تم استلام طلبك بنجاح!</h2>
-            <p style="margin-top: 10px; color: var(--text-muted);">تم حفظ بياناتك وجاري معالجتها وتجهيز الدعوة الخاصة بك.</p>
-            
-            <div class="order-id-badge" id="displayOrderId" title="اضغط لنسخ الكود">MV-00000</div>
-            <p style="font-size: 9.5pt; color: var(--text-muted);">انقر على الكود أعلاه لنسخه تلقائياً</p>
-
-            <div class="warning-box">
-                <strong>تنبيه هام جداً وصارم:</strong><br>
-                يرجى نسخ رقم الطلب الموضح أعلاه أو تصوير هذه الشاشة (سُكرين شوت) الآن والاحتفاظ به! هذا الرقم يظهر لك لمرة واحدة فقط ولن تتمكن من رؤيته مجدداً، وهو هويتك الوحيدة لمتابعة طلبك وتسليم الصور معنا عبر الواتساب، وفي حال حدوث أي تأخير أرسل لنا هذا الرقم فوراً.
-            </div>
-            
-            <button class="btn-back" style="margin-top: 25px; width: 100%; padding: 12px;" onclick="window.location.reload();">العودة للرئيسية تصفح من جديد</button>
-        </div>
-
+    <!-- 1. صفحة المفاجأة -->
+    <div id="intro-overlay">
+        <div class="pulse-element">🎁</div>
+        <button class="intro-btn" onclick="startCelebration()">إفتح المفاجأة ✨</button>
     </div>
 
-    <!-- ================= جافا سكريبت إدارة جلب الملفات والتحقق والإرسال ================= -->
+    <!-- 2. محتوى الصفحة الرئيسي -->
+    <main id="main-content">
+        <!-- زر صوت علوي صغير -->
+        <button class="audio-control" onclick="toggleAudio()">
+            <span id="audio-icon">🔊</span>
+            <span id="audio-text">صوت</span>
+        </button>
+
+        <!-- الهيدر والصورة -->
+        <div class="header-section">
+            <div class="profile-container">
+                <img class="profile-img" src="https://via.placeholder.com/160" alt="صاحب عيد الميلاد">
+            </div>
+            <h1 class="birthday-title">اليوم عيد ميلادي! 🎉</h1>
+            <p style="color: #bbb;">مرحباً بكم في مساحتي الخاصة للاحتفال بيومي المميز</p>
+        </div>
+
+        <!-- ألبوم الصور التفاعلي -->
+        <section class="section-container">
+            <h2 class="section-title">📸 ألبوم ذكرياتي الكاجوال</h2>
+            <div class="slider-wrapper">
+                <div class="slide active"><img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=500" alt="صورة 1"></div>
+                <div class="slide"><img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=500" alt="صورة 2"></div>
+                <div class="slide"><img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?w=500" alt="صورة 3"></div>
+                
+                <button class="slider-btn prev" onclick="moveSlide(-1)">&#10095;</button>
+                <button class="slider-btn next" onclick="moveSlide(1)">&#10094;</button>
+            </div>
+        </section>
+
+        <!-- صندوق التهاني والتعليقات المربوط بجوجل فورم -->
+        <section class="section-container">
+            <h2 class="section-title">✍️ دفتر تهاني الأصدقاء</h2>
+            
+            <form class="comment-form" id="commentForm">
+                <input type="text" id="visitor-name" placeholder="اكتب اسمك الكريم هنا..." required>
+                <textarea id="visitor-message" rows="3" placeholder="اترك لي تهنئة أو كلمة جميلة بمناسبة عيد ميلادي... ✨" required></textarea>
+                <button type="submit">إرسال التهنئة وإشعال شمعة 🎂</button>
+            </form>
+
+            <div class="comments-list" id="comments-box">
+                <!-- ستظهر التعليقات هنا ديناميكياً من ملف الإكسل -->
+            </div>
+        </section>
+    </main>
+
     <script>
-        // ضع هنا رابط الويب اب الـ الخاص بك من Google Apps Script بعد نشره مستقبلاً
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzkzkgouTrWn9uQ9ZWh_lwC6KJzp3P6tZ1SpXWblG0pHmlA1ad09ar1ZCKXtMe3bS1z/exec";
+        // الروابط والرموز الخاصة بنموذج محمد المستخرج تم دمجها وجاهزة بالكامل
+        const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScy-W8w8B9g_YI_t9W1q_Hvx9EorY4_D-wOa2-lW6hF7vjGfw/formResponse";
+        const NAME_ENTRY_ID = "entry.1780415049"; 
+        const MESSAGE_ENTRY_ID = "entry.367354000";
 
-        let currentActiveCategory = "";
-        let selectedTemplateData = null;
+        // ⚠️ ضع هنا رابط النشر على الويب الخاص بـ Google Sheet (بصيغة CSV) ليعمل العرض تلقائياً
+        const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQrfudn-eJkvS6KVgPExqVElFB_TKXlGbjR2nWn4WoFdJmzNYMfYQfxYKDFXCn_gyXd6Xn1V-DspTyi/pub?output=csv";
 
-        // عند فتح الصفحة، نجلب الأقسام الرئيسية أولاً
-        document.addEventListener("DOMContentLoaded", () => {
-            fetchCategories();
+        const music = document.getElementById('bg-music');
+        const introOverlay = document.getElementById('intro-overlay');
+        const mainContent = document.getElementById('main-content');
+        const audioIcon = document.getElementById('audio-icon');
+
+        function startCelebration() {
+            music.play().catch(err => console.log("Audio block:", err));
+            introOverlay.style.opacity = '0';
+            introOverlay.style.visibility = 'hidden';
+            mainContent.style.opacity = '1';
+            mainContent.style.visibility = 'visible';
+            createConfetti();
+        }
+
+        function toggleAudio() {
+            if (music.paused) {
+                music.play();
+                audioIcon.innerText = "🔊";
+            } else {
+                music.pause();
+                audioIcon.innerText = "🔇";
+            }
+        }
+
+        // تحريك ألبوم الصور
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function moveSlide(direction) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        // إرسال البيانات فوراً إلى نموذج جوجل
+        document.getElementById('commentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const nameInput = document.getElementById('visitor-name');
+            const messageInput = document.getElementById('visitor-message');
+
+            const nameValue = nameInput.value;
+            const messageValue = messageInput.value;
+
+            const formData = new FormData();
+            formData.append(NAME_ENTRY_ID, nameValue);
+            formData.append(MESSAGE_ENTRY_ID, messageValue);
+
+            fetch(GOOGLE_FORM_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+            })
+            .then(() => {
+                addNewCommentOnUI(nameValue, messageValue);
+                nameInput.value = '';
+                messageInput.value = '';
+                for(let i=0; i<15; i++) spawnSingleConfetti();
+            })
+            .catch(err => console.error("خطأ في إرسال التهنئة:", err));
         });
 
-        // 1. جلب الأقسام من ملف categories.json
-        function fetchCategories() {
-            fetch('categories.json')
-                .then(res => res.json())
-                .then(data => {
-                    const container = document.getElementById("categoriesContainer");
-                    container.innerHTML = "";
-                    data.categories.forEach(cat => {
-                        const div = document.createElement("div");
-                        div.className = "card-category";
-                        div.onclick = () => loadCategoryTemplates(cat.id, cat.file_data);
-                        div.innerHTML = `
-                            <span class="icon">${cat.icon}</span>
-                            <h3>${cat.name}</h3>
-                            <p>${cat.desc}</p>
-                        `;
-                        container.appendChild(div);
-                    });
-                })
-                .catch(err => console.error("خطأ في جلب ملف الأقسام الرئيسي:", err));
-        }
-
-        // 2. جلب القوالب الخاصة بقسم معين من ملف الـ JSON المخصص له
-        function loadCategoryTemplates(catId, jsonFileName) {
-            currentActiveCategory = catId;
-            fetch(jsonFileName)
-                .then(res => res.json())
-                .then(data => {
-                    document.getElementById("homePage").style.display = "none";
-                    document.getElementById("categoryPage").style.display = "block";
-                    document.getElementById("categoryPageTitle").innerText = data.category_title;
-
-                    const container = document.getElementById("templatesContainer");
-                    container.innerHTML = "";
-
-                    data.templates.forEach(tmpl => {
-                        const card = document.createElement("div");
-                        card.className = "card-template";
-                        card.innerHTML = `
-                            <div class="template-thumb">${data.category_icon}</div>
-                            <div class="template-body">
-                                <div>
-                                    <div class="template-title">${tmpl.name}</div>
-                                    <div class="template-price">السعر: ${tmpl.price}</div>
-                                </div>
-                                <div class="template-actions">
-                                    <button class="btn-action btn-preview-link" onclick='openPreviewPage(${JSON.stringify(tmpl)})'>المعاينة</button>
-                                    <button class="btn-action btn-order-trigger" onclick='openOrderFormPage(${JSON.stringify(tmpl)})'>اطلب الآن</button>
-                                </div>
-                            </div>
-                        `;
-                        container.appendChild(card);
-                    });
-                })
-                .catch(err => alert("لم يتم العثور على ملف البيانات الخاص بهذا القسم بعد في المستودع: " + jsonFileName));
-        }
-
-        // 3. فتح صفحة المعاينة ومحاكاة ملف القالب من المستودع
-        function openPreviewPage(tmpl) {
-            selectedTemplateData = tmpl;
-            document.getElementById("categoryPage").style.display = "none";
-            document.getElementById("previewPage").style.display = "block";
-            document.getElementById("previewPageTitle").innerText = `معاينة: ${tmpl.name}`;
-
-            const mockBox = document.getElementById("previewMockBox");
-            mockBox.innerHTML = `
-                <div style="padding:20px;">
-                    <h2 style="margin-bottom:10px; color:#000;">[ شاشة عرض القالب التفاعلي ]</h2>
-                    <p style="color:var(--text-muted);">رابط الملف الفعلي في المستودع المحاكي: <b>${tmpl.preview_file}</b></p>
-                    <p style="margin-top:15px; font-size:11pt;">هنا يتم تضمين حركات القالب والموسيقى لرؤيتها حية قبل الشراء.</p>
-                </div>
-            `;
-
-            document.getElementById("previewOrderButton").onclick = () => {
-                openOrderFormPage(tmpl);
-            };
-        }
-
-        // 4. فتح صفحة الفورم المستقلة وتوليد الأسئلة ديناميكياً
-        function openOrderFormPage(tmpl) {
-            selectedTemplateData = tmpl;
-            document.getElementById("categoryPage").style.display = "none";
-            document.getElementById("previewPage").style.display = "none";
-            document.getElementById("formPage").style.display = "block";
-            document.getElementById("formPageTitle").innerText = `طلب تخصيص: ${tmpl.name}`;
-
-            // إسناد القيم المخفية
-            document.getElementById("hiddenTemplateId").value = tmpl.id;
-            document.getElementById("hiddenTemplateName").value = tmpl.name;
-            document.getElementById("hiddenCategoryName").value = currentActiveCategory;
-
-            // إعداد ملاحظة الصور المطلوبة
-            const noticeBox = document.getElementById("photosNoticeBox");
-            noticeBox.innerHTML = `📋 <b>ملاحظة الصور:</b> هذا القالب يتطلب عدد <b>(${tmpl.photos_count})</b> صور. يرجى تجهيزهم بالكامل على هاتفك، حيث سيتم استلامهم منك يدوياً وصريحاً عبر تطبيق الواتساب عند التواصل معك لتأكيد الأوردر ومطابقة كود طلبك.`;
-
-            // توليد الأسئلة المتغيرة ديناميكياً من الصندوق الفاضي
-            const inputsContainer = document.getElementById("dynamicInputsContainer");
-            inputsContainer.innerHTML = "";
-
-            tmpl.fields.forEach(field => {
-                const group = document.createElement("div");
-                group.className = "form-group";
-
-                const label = document.createElement("label");
-                label.innerHTML = field.label + (field.required ? " *" : "");
-                group.appendChild(label);
-
-                let input;
-                if (field.type === "textarea") {
-                    input = document.createElement("textarea");
-                    input.rows = 3;
-                    input.placeholder = "اكتب التفاصيل المطلوبة هنا...";
-                } else {
-                    input = document.createElement("input");
-                    input.type = field.type;
-                    input.placeholder = `أدخل ${field.label}`;
-                }
-
-                input.name = `custom_${field.key}`;
-                input.id = `field_${field.key}`;
-                input.required = field.required;
-
-                group.appendChild(input);
-                inputsContainer.appendChild(group);
-            });
-        }
-
-        // أزرار التنقل الخلفي
-        function navigateBackToHome() {
-            document.getElementById("categoryPage").style.display = "none";
-            document.getElementById("homePage").style.display = "block";
-        }
-        function navigateBackToCategory() {
-            document.getElementById("previewPage").style.display = "none";
-            document.getElementById("formPage").style.display = "none";
-            document.getElementById("categoryPage").style.display = "block";
-        }
-
-        // 5. التحقق وإرسال البيانات للـ Google Sheet عن طريق الـ Apps Script
-        function submitOrderToGoogleSheets(event) {
-            event.preventDefault();
-
-            // فحص رقم الهاتف والواتساب بدقة وثبات عبر الـ RegEx
-            const phoneValue = document.getElementById("clientPhone").value.trim();
-            const phoneRegex = /^[0-9+\s]{8,15}$/;
-            if (!phoneRegex.test(phoneValue)) {
-                alert("يرجى إدخال رقم هاتف متاح عليه واتساب بشكل صحيح (أرقام فقط وبدون حروف).");
+        // دالة جلب كل التعليقات المخزنة في الإكسل وعرضها
+        function loadCommentsFromSheet() {
+            if (!GOOGLE_SHEET_CSV_URL.includes("http")) {
+                const commentsBox = document.getElementById('comments-box');
+                commentsBox.innerHTML = `
+                    <div class="comment-card">
+                        <div class="comment-author">أحمد خالد</div>
+                        <div class="comment-text">كل عام وأنت بألف خير يا صاحبي! سنة سعيدة عليك تحقق فيها كل طموحاتك يارب. 🎈</div>
+                    </div>
+                    <div class="comment-card">
+                        <div class="comment-author">سارة محمد</div>
+                        <div class="comment-text">عيد ميلاد سعيد وعمر مديد بالصحة والنجاح دائماً وأبدأ! 🎉👏</div>
+                    </div>
+                `;
                 return;
             }
 
-            // توليد كود طلب عشوائي وفريد ومميز للمستخدم لمرة واحدة
-            const randomNumber = Math.floor(10000 + Math.random() * 90000);
-            const generatedOrderId = `MV-${randomNumber}`;
+            fetch(GOOGLE_SHEET_CSV_URL)
+            .then(response => response.text())
+            .then(data => {
+                const rows = data.split('\n').slice(1);
+                const commentsBox = document.getElementById('comments-box');
+                commentsBox.innerHTML = '';
 
-            // تجميع حقول الإجابات المخصصة المتغيرة في خانة نصية واحدة منسقة للتقسيمة الذكية بالشيت
-            let customFieldsSummary = [];
-            selectedTemplateData.fields.forEach(field => {
-                const element = document.getElementById(`field_${field.key}`);
-                if (element) {
-                    customFieldsSummary.push(`${field.label}: ${element.value}`);
-                }
-            });
-            const finalDataDetailsString = customFieldsSummary.join(" | ");
-
-            // تجهيز البيانات المرسلة لـ Apps Script
-            const payload = {
-                order_id: generatedOrderId,
-                client_name: document.getElementById("clientName").value,
-                client_phone: phoneValue,
-                category_name: document.getElementById("hiddenCategoryName").value,
-                template_name: document.getElementById("hiddenTemplateName").value,
-                dynamic_details: finalDataDetailsString
-            };
-
-            // إرسال البيانات الفعلي باستعمال fetch مع استخدام صيغة x-www-form-urlencoded المدعومة في سكريبت جوجل
-            const searchParams = new URLSearchParams();
-            for (const key in payload) {
-                searchParams.append(key, payload[key]);
-            }
-
-            // تنفيذ الإرسال البرمجي
-            fetch(WEB_APP_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: searchParams
+                rows.forEach(row => {
+                    const columns = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); 
+                    if (columns.length >= 3) {
+                        const name = columns[1].replace(/"/g, "").trim();
+                        const msg = columns[2].replace(/"/g, "").trim();
+                        if (name && msg) {
+                            addNewCommentOnUI(name, msg);
+                        }
+                    }
+                });
             })
-            .then(() => {
-                // الانتقال الفوري لشاشة النجاح الحصرية وعرض الـ ID
-                document.getElementById("formPage").style.display = "none";
-                const successPage = document.getElementById("successPage");
-                successPage.style.display = "block";
-                
-                const idBadge = document.getElementById("displayOrderId");
-                idBadge.innerText = generatedOrderId;
-                
-                // ميزة النقر لنسخ الكود
-                idBadge.onclick = () => {
-                    navigator.clipboard.writeText(generatedOrderId);
-                    alert("تم نسخ رقم طلبك بنجاح: " + generatedOrderId);
-                };
-            })
-            .catch(err => {
-                console.error("خطأ أثناء إرسال البيانات:", err);
-                alert("حدث خطأ في الشبكة، ولكن تم تجهيز طلبك محلياً بكود: " + generatedOrderId);
-            });
+            .catch(err => console.error("خطأ في جلب التعليقات:", err));
         }
+
+        function addNewCommentOnUI(name, message) {
+            const commentsBox = document.getElementById('comments-box');
+            const card = document.createElement('div');
+            card.classList.add('comment-card');
+            
+            card.innerHTML = `
+                <div class="comment-author">${escapeHTML(name)}</div>
+                <div class="comment-text">${escapeHTML(message)}</div>
+            `;
+
+            commentsBox.insertBefore(card, commentsBox.firstChild);
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+        }
+
+        function spawnSingleConfetti() {
+            const colors = ['#ff477e', '#ff85a2', '#ffe600', '#2ec4b6', '#ff9f1c'];
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.width = confetti.style.height = (Math.random() * 6 + 6) + 'px';
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 4000);
+        }
+
+        function createConfetti() {
+            setInterval(() => {
+                if (!document.hidden && mainContent.style.opacity === '1') {
+                    spawnSingleConfetti();
+                }
+            }, 250);
+        }
+
+        window.addEventListener('DOMContentLoaded', loadCommentsFromSheet);
     </script>
 </body>
 </html>
