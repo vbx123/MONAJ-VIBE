@@ -18,7 +18,6 @@
       --text-muted: #a09cb0;
       --border: #2a2444;
       --success: #00b894;
-      --warning: #ff7675;
     }
 
     * {
@@ -83,7 +82,6 @@
       display: block;
     }
 
-    /* Grid layouts for cards */
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -173,66 +171,6 @@
       background: var(--primary-hover);
     }
 
-    /* Form Fields Styling (not used now but keep minimal) */
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    label {
-      display: block;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: var(--text);
-    }
-
-    input[type="text"], input[type="tel"], textarea {
-      width: 100%;
-      padding: 12px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
-      font-size: 14px;
-      transition: border-color 0.2s;
-    }
-
-    input:focus, textarea:focus {
-      outline: none;
-      border-color: var(--primary);
-    }
-
-    .dynamic-field-box {
-      background: rgba(255,255,255,0.01);
-      border: 1px dashed var(--border);
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 20px;
-    }
-
-    .btn-main {
-      width: 100%;
-      padding: 14px;
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .btn-main:hover {
-      background: var(--primary-hover);
-    }
-
-    .btn-main:disabled {
-      background: var(--border);
-      color: var(--text-muted);
-      cursor: not-allowed;
-    }
-
     .btn-back-nav {
       background: transparent;
       border: none;
@@ -249,45 +187,6 @@
       color: var(--text);
     }
 
-    /* Success Page Styles - kept as reference but will not be used, still safe */
-    .success-container {
-      text-align: center;
-      padding: 30px 10px;
-    }
-
-    .success-icon {
-      font-size: 55px;
-      color: var(--success);
-      margin-bottom: 15px;
-    }
-
-    #displayOrderId {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--primary);
-      background: rgba(108, 92, 231, 0.1);
-      border: 1px dashed var(--primary);
-      padding: 10px 20px;
-      border-radius: 8px;
-      display: inline-block;
-      margin: 15px 0;
-      cursor: pointer;
-      letter-spacing: 1px;
-    }
-
-    .warning-box {
-      background: rgba(255, 118, 117, 0.08);
-      border: 1px solid rgba(255, 118, 117, 0.2);
-      color: #ff9f9e;
-      font-size: 12px;
-      padding: 12px;
-      border-radius: 8px;
-      margin-top: 20px;
-      text-align: right;
-      line-height: 1.6;
-    }
-    
-    /* small utility */
     .text-muted {
       color: var(--text-muted);
       font-size: 13px;
@@ -302,161 +201,142 @@
   </header>
 
   <div class="container">
-
     <div id="homePage" class="page active-page">
       <h2>اختر القسم الرئيسي لطلبك:</h2>
-      <div id="categoriesContainer" class="grid">
-        </div>
+      <div id="categoriesContainer" class="grid"></div>
     </div>
 
     <div id="categoryPage" class="page">
       <button class="btn-back-nav" onclick="navigateTo('homePage')">➔ العودة للأقسام</button>
       <h2 id="categoryPageTitle">القوالب المتوفرة</h2>
-      <div id="templatesContainer" class="grid">
-        </div>
-    </div>
-
-    <!-- تم إزالة صفحة orderFormPage نهائيًا، وتم استبدال الوظيفة بالواتساب المباشر -->
-    <!-- إبقاء صفحة نجاح افتراضية ولكن لن تُستخدم، مع الاحتفاظ بها لتجنب أي أخطاء ولكن لن تظهر أبدًا-->
-    <div id="successPage" class="page">
-      <div class="success-container">
-        <div class="success-icon">✓</div>
-        <h2>تم استلام طلبك بنجاح!</h2>
-        <p style="margin-top: 10px; color: var(--text-muted);">سيتم التواصل معك عبر الواتساب.</p>
-        <button class="btn-main" style="margin-top: 25px;" onclick="window.location.reload()">تصفح من جديد</button>
-      </div>
+      <div id="templatesContainer" class="grid"></div>
     </div>
   </div>
 
   <script>
-    // رقم الواتساب المستهدف: +20 15 03296750 (بدون علامة + في الرابط ولكن يمكن إضافة 20)
-    const TARGET_WHATSAPP_NUMBER = "201503296750";  // بدون +, فقط الأرقام
-    
-    // المتغيرات المساعدة
     let currentActiveCategory = "";
+    let whatsappNumber = "201503296750"; // الرقم الافتراضي
 
-    document.addEventListener("DOMContentLoaded", () => {
-      fetchCategories();
-    });
+    // تحميل الإعدادات أولاً
+    async function loadConfig() {
+      try {
+        const response = await fetch('config.json');
+        const config = await response.json();
+        if (config.whatsapp_number) {
+          whatsappNumber = config.whatsapp_number;
+        }
+      } catch (err) {
+        console.warn("لم يتم العثور على config.json، استخدام الرقم الافتراضي");
+      }
+    }
 
     function navigateTo(pageId) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
       document.getElementById(pageId).classList.add('active-page');
     }
 
-    // 1. جلب الأقسام من ملف categories.json
-    function fetchCategories() {
-      fetch('categories.json')
-        .then(res => res.json())
-        .then(data => {
-          const container = document.getElementById("categoriesContainer");
-          container.innerHTML = "";
-          data.categories.forEach(cat => {
-            const div = document.createElement("div");
-            div.className = "card-category";
-            div.onclick = () => loadCategoryTemplates(cat.id, cat.file_data);
-            div.innerHTML = `
-              <span class="icon">${cat.icon}</span>
-              <h3>${cat.name}</h3>
-              <p>${cat.desc}</p>
-            `;
-            container.appendChild(div);
-          });
-        })
-        .catch(err => {
-          console.error("خطأ في جلب ملف الأقسام الرئيسي:", err);
-          // عرض بيانات تجريبية في حال عدم وجود الملف (للتجربة)
-          const container = document.getElementById("categoriesContainer");
-          container.innerHTML = `<div class="text-muted" style="grid-column:span 2; text-align:center;">⚠️ لم يتم العثور على ملف الأقسام، تأكد من وجود categories.json</div>`;
+    // جلب الأقسام من categories.json
+    async function fetchCategories() {
+      try {
+        const response = await fetch('categories.json');
+        const data = await response.json();
+        const container = document.getElementById("categoriesContainer");
+        container.innerHTML = "";
+        
+        data.categories.forEach(cat => {
+          const div = document.createElement("div");
+          div.className = "card-category";
+          div.onclick = () => loadCategoryTemplates(cat.id, cat.file_data);
+          div.innerHTML = `
+            <span class="icon">${cat.icon}</span>
+            <h3>${cat.name}</h3>
+            <p>${cat.desc}</p>
+          `;
+          container.appendChild(div);
         });
+      } catch (err) {
+        console.error("خطأ في جلب الأقسام:", err);
+        document.getElementById("categoriesContainer").innerHTML = 
+          `<div class="text-muted" style="grid-column:span 2; text-align:center;">⚠️ لم يتم العثور على ملف categories.json</div>`;
+      }
     }
 
-    // 2. جلب القوالب الخاصة بقسم معين
-    function loadCategoryTemplates(catId, jsonFileName) {
+    // جلب القوالب من ملف JSON الخاص بالقسم
+    async function loadCategoryTemplates(catId, jsonFileName) {
       currentActiveCategory = catId;
-      fetch(jsonFileName)
-        .then(res => res.json())
-        .then(data => {
-          navigateTo("categoryPage");
-          document.getElementById("categoryPageTitle").innerHTML = `${data.category_icon || '📁'} ${data.category_title}`;
+      try {
+        const response = await fetch(jsonFileName);
+        const data = await response.json();
+        navigateTo("categoryPage");
+        document.getElementById("categoryPageTitle").innerHTML = `${data.category_icon || '📁'} ${data.category_title}`;
+        
+        const container = document.getElementById("templatesContainer");
+        container.innerHTML = "";
+        
+        data.templates.forEach(tmpl => {
+          const card = document.createElement("div");
+          card.className = "card-template";
           
-          const container = document.getElementById("templatesContainer");
-          container.innerHTML = "";
+          // تحديد رابط المعاينة من preview_file أو preview_url
+          const previewFile = tmpl.preview_file || tmpl.preview_url || "#";
           
-          data.templates.forEach(tmpl => {
-            const card = document.createElement("div");
-            card.className = "card-template";
-            
-            // إنشاء بنية البطاقة مع زر الطلب الذي يفتح الواتساب مباشرة
-            card.innerHTML = `
-              <div class="template-thumb" style="font-size:28px; margin-bottom:5px;">${data.category_icon || '✨'}</div>
-              <div class="template-body">
-                <div>
-                  <div class="template-title" style="font-weight:600; font-size:15px;">${tmpl.name}</div>
-                  <div class="template-price">السعر: ${tmpl.price}</div>
-                </div>
-                <div class="template-actions">
-                  <button class="btn-action btn-preview-link" data-preview-url="${tmpl.preview_url || '#'}">المعاينة</button>
-                  <button class="btn-action btn-order-trigger" data-template-name="${tmpl.name.replace(/"/g, '&quot;')}" data-preview-url="${tmpl.preview_url || '#'}" data-price="${tmpl.price}">طلب القالب</button>
-                </div>
-              </div>
-            `;
-            
-            // إضافة الأحداث
-            const previewBtn = card.querySelector('.btn-preview-link');
-            const orderBtn = card.querySelector('.btn-order-trigger');
-            
-            previewBtn.addEventListener('click', (e) => {
-              e.stopPropagation();
-              const url = previewBtn.getAttribute('data-preview-url');
-              openPreview(url);
-            });
-            
-            orderBtn.addEventListener('click', (e) => {
-              e.stopPropagation();
-              const templateName = orderBtn.getAttribute('data-template-name');
-              const previewUrlRaw = orderBtn.getAttribute('data-preview-url');
-              const price = orderBtn.getAttribute('data-price');
-              redirectToWhatsApp(templateName, previewUrlRaw, price);
-            });
-            
-            container.appendChild(card);
+          card.innerHTML = `
+            <div style="font-size:28px; margin-bottom:5px;">${data.category_icon || '✨'}</div>
+            <div style="font-weight:600; font-size:15px;">${tmpl.name}</div>
+            <div class="template-price">السعر: ${tmpl.price}</div>
+            <div class="template-actions">
+              <button class="btn-action btn-preview-link" data-preview="${previewFile}">المعاينة</button>
+              <button class="btn-action btn-order-trigger" data-name="${tmpl.name.replace(/"/g, '&quot;')}" data-preview="${previewFile}" data-price="${tmpl.price}">طلب القالب</button>
+            </div>
+          `;
+          
+          const previewBtn = card.querySelector('.btn-preview-link');
+          const orderBtn = card.querySelector('.btn-order-trigger');
+          
+          previewBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const url = previewBtn.getAttribute('data-preview');
+            openPreview(url);
           });
-        })
-        .catch(err => {
-          console.error("خطأ في جلب تفاصيل قوالب القسم:", err);
-          const container = document.getElementById("templatesContainer");
-          container.innerHTML = `<div class="text-muted" style="grid-column:span 2; text-align:center;">⚠️ فشل تحميل القوالب: ${jsonFileName}</div>`;
+          
+          orderBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const templateName = orderBtn.getAttribute('data-name');
+            const previewUrl = orderBtn.getAttribute('data-preview');
+            const price = orderBtn.getAttribute('data-price');
+            redirectToWhatsApp(templateName, previewUrl, price);
+          });
+          
+          container.appendChild(card);
         });
+      } catch (err) {
+        console.error("خطأ في جلب القوالب:", err);
+        document.getElementById("templatesContainer").innerHTML = 
+          `<div class="text-muted" style="grid-column:span 2; text-align:center;">⚠️ فشل تحميل القوالب: ${jsonFileName}</div>`;
+      }
     }
 
-    // فتح معاينة القالب (يحاول فتح a6.html أو الرابط الموجود)
+    // فتح صفحة المعاينة (ملف HTML موجود في نفس المجلد)
     function openPreview(url) {
       if (!url || url === "#") {
         alert("رابط المعاينة غير متاح حالياً لهذا القالب.");
         return;
       }
-      // إذا كان الرابط a6.html أو أي رابط نسبي، سيفتح بشكل صحيح
+      // فتح الملف مباشرة (سيفتح a6.html أو أي ملف html آخر)
       window.open(url, '_blank');
     }
 
-    // وظيفة تحويل الطلب إلى واتساب مباشر بدون أي فورم أو تخزين في جوجل شيت
+    // فتح واتساب برسالة تحتوي اسم المنتج ورابط المعاينة
     function redirectToWhatsApp(templateName, previewUrl, price) {
-      // تكوين النص المطلوب: باسم المنتج ورابط المعاينة
-      // نص جاهز: "أريد طلب قالب: [اسم المنتج] - رابط المعاينة: [رابط المعاينة]"
       let message = `مرحباً، أرغب في طلب قالب "${templateName}"`;
+      
       if (previewUrl && previewUrl !== "#") {
-        // نستخدم الرابط الكامل: بما أن الموقع قد يكون على domain أو local, سنستخدم الرابط الحالي كأساس للوصول لـ a6.html
+        // تحويل الرابط النسبي إلى رابط مطلق
         let fullPreviewLink = previewUrl;
-        // إذا كان الرابط هو "a6.html" مجرد اسم ملف أو مسار نسبي، نقوم بتحويله إلى رابط مطلق بناءً على origin الحالي
         if (!previewUrl.startsWith('http://') && !previewUrl.startsWith('https://')) {
-          // إنشاء رابط مطلق استنادًا إلى موقع الصفحة الحالي
-          const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/');
           fullPreviewLink = new URL(previewUrl, window.location.href).href;
         }
         message += ` - رابط المعاينة: ${fullPreviewLink}`;
-      } else {
-        message += ` (لا يتوفر رابط معاينة مباشر)`;
       }
       
       if (price && price !== "غير محدد") {
@@ -465,21 +345,18 @@
       
       message += ` - القسم: ${currentActiveCategory || "عام"}`;
       
-      // ترميز النص للـ URL
       const encodedMessage = encodeURIComponent(message);
-      
-      // رابط واتساب مباشر للرقم المطلوب
-      const whatsappUrl = `https://wa.me/${TARGET_WHATSAPP_NUMBER}?text=${encodedMessage}`;
-      
-      // فتح الواتساب في نافذة جديدة
+      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
       window.open(whatsappUrl, '_blank');
     }
+
+    // بدء التشغيل
+    async function init() {
+      await loadConfig();
+      await fetchCategories();
+    }
     
-    // تنبيه في حالة عدم تحميل ملفات JSON مع الحفاظ على تجربة جيدة
-    window.addEventListener('error', (e) => {
-      if(e.target.tagName === 'SCRIPT' && e.target.src) return;
-      console.warn("تأكد من وجود ملفات الأقسام categories.json وملفات الأقسام الفرعية");
-    });
+    init();
   </script>
 </body>
   </html>
